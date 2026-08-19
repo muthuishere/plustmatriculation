@@ -1,0 +1,91 @@
+version: '3'
+
+vars:
+  AGG: python3 scripts/aggregate.py
+
+tasks:
+  default:
+    desc: Full aggregation — crawl, download, convert, OCR, clean, index
+    cmds:
+      - '{{.AGG}} all'
+
+  discover:
+    desc: Crawl the source hubs and refresh .aggregate/links.tsv
+    cmds:
+      - '{{.AGG}} discover --refresh'
+
+  fetch:
+    desc: Download every known paper we do not already have
+    cmds:
+      - '{{.AGG}} fetch'
+
+  dedupe:
+    desc: Report byte-identical PDFs (dry run)
+    cmds:
+      - '{{.AGG}} dedupe'
+
+  dedupe:apply:
+    desc: Delete byte-identical PDFs
+    cmds:
+      - '{{.AGG}} dedupe --apply'
+
+  markdown:
+    desc: MarkItDown every PDF, then OCR the ones with no text layer
+    cmds:
+      - '{{.AGG}} markdown'
+      - '{{.AGG}} ocr'
+
+  clean:
+    desc: Rebuild markdown-english/ from markdown/
+    cmds:
+      - '{{.AGG}} clean'
+
+  index:
+    desc: Regenerate docs/assets/README.md
+    cmds:
+      - '{{.AGG}} index'
+
+  deps:
+    desc: Install the external tools the pipeline shells out to
+    cmds:
+      - brew install poppler tesseract
+      - uv tool install markitdown || pipx install markitdown
+
+  stats:
+    desc: Count what we have
+    cmds:
+      - |
+        for d in annual quarterly half-yearly; do
+          printf '%-12s qp=%-4s ak=%s\n' "$d" \
+            "$(find docs/assets/$d -maxdepth 1 -name '*.pdf' | wc -l | tr -d ' ')" \
+            "$(find docs/assets/$d/answer-keys -name '*.pdf' 2>/dev/null | wc -l | tr -d ' ')"
+        done
+        printf 'markdown     %s\n' "$(find docs/assets/markdown -name '*.md' | wc -l | tr -d ' ')"
+        du -sh docs/assets
+
+  # --- publishing -------------------------------------------------------
+  # Needs S3_ACCESS_KEY / S3_SECRET_KEY in the environment (never in this file).
+  s3:create:
+    desc: Create the public bucket and apply a read-only-objects policy
+    cmds:
+      - python3 scripts/publish_s3.py create
+
+  s3:sync:
+    desc: Upload every PDF to the bucket
+    cmds:
+      - python3 scripts/publish_s3.py sync
+
+  s3:verify:
+    desc: HEAD a sample of objects over plain HTTPS
+    cmds:
+      - python3 scripts/publish_s3.py verify
+
+  site:
+    desc: Rebuild docs/data/*.json with PDFs pointed at the bucket
+    cmds:
+      - python3 scripts/questionbank.py --stats --pdf-base "$(python3 scripts/publish_s3.py url)"
+
+  serve:
+    desc: Serve the site locally
+    cmds:
+      - python3 -m http.server -d docs 8000

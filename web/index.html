@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Inter for the interface, Source Serif for question text: a serif is
+     measurably easier over long reading, and exam questions get read, not
+     skimmed. JetBrains Mono for SQL. -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Source+Serif+4:opsz,wght@8..60,400..600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<title>TN +2 Papers</title>
+<meta name="description" content="Every Tamil Nadu Class 12 science question paper — annual, quarterly and half-yearly — searchable, practisable, and open as data." />
+<script>
+  // Set the theme before first paint so there is no flash of the wrong one.
+  (function () {
+    var t = localStorage.getItem('theme') || 'system';
+    var dark = t === 'dark' || (t === 'system' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  })();
+</script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

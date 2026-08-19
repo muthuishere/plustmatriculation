@@ -1,0 +1,32 @@
+# The papers themselves: ~1.1 GB of scans. A GitHub Pages site is capped at
+# 1 GB, so the PDFs stay local and the site links to the original hosts.
+# Run `python3 scripts/aggregate.py all` to rebuild them from links.tsv.
+docs/assets/**/*.pdf
+
+# Raw MarkItDown output — large, mostly watermark noise, and regenerable.
+# The cleaned English text (markdown-english/) IS committed and published.
+docs/assets/markdown/
+
+# Crawl page cache (regenerable); links.tsv + manifest.json ARE committed,
+# because they are what makes the corpus reproducible.
+docs/assets/.aggregate/pages/
+docs/assets/.aggregate/ocrtmp/
+docs/assets/.aggregate/*.tmp
+
+.DS_Store
+__pycache__/
+
+# Node / build artifacts
+web/node_modules/
+web/dist/
+*.log
+
+# Compiled Go binary (build with `go build ./cmd/publish`)
+/publish
+web/tsconfig.tsbuildinfo
+
+# Intermediate JSON for the dataset build. The site reads the Parquet, and both
+# JSON and Parquet are published to object storage, so the repo keeps the small
+# columnar files and not the 6 MB of JSON.
+docs/data/questions.json
+docs/data/papers.json
