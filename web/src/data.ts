@@ -32,6 +32,9 @@ export interface Paper {
   hosted?: boolean
 }
 
+export const SITE = 'https://muthuishere.github.io/plustmatriculation/'
+export const REPO = 'https://github.com/muthuishere/plustmatriculation'
+
 /** Where the public Parquet + PDFs live. Also shown to users so they can query it. */
 export const BUCKET =
   'https://publicassets.hel1.your-objectstorage.com/tn-plus2-papers'

@@ -358,3 +358,12 @@ footer { border-top: 1px solid var(--line); margin-top: 56px; padding: 24px 0 60
 .sqlbox:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 button.tag { font-family: inherit; }
 button.tag:hover { border-color: var(--accent); color: var(--accent); }
+
+.linklist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.linklist li { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+.linklist li > span:first-child {
+  min-width: 190px; color: var(--ink-3); font-size: .82rem;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.linklist a { word-break: break-all; }
+footer p { max-width: 70ch; }

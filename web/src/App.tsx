@@ -4,7 +4,7 @@ import {
 } from './charts'
 import { lit, where } from './db'
 import { useDebounced, useQuery, useScalar } from './hooks'
-import { BUCKET, EXAM_LABEL, marksLabel, nf, textPath, titleCase } from './data'
+import { BUCKET, EXAM_LABEL, marksLabel, nf, REPO, SITE, textPath, titleCase } from './data'
 import { Empty, Options, Search, Select, Tag, ThemeToggle, useTheme } from './ui'
 
 type Tab = 'overview' | 'papers' | 'questions' | 'practice' | 'data'
@@ -50,8 +50,16 @@ export default function App() {
       </main>
 
       <footer className="wrap">
-        Papers set by the Directorate of Government Examinations, Tamil Nadu.
-        Collected for study — every paper links back to its source.
+        <p>
+          Papers set by the Directorate of Government Examinations, Tamil Nadu — State Board
+          (Matriculation and State Board sit the same +2 exam since the 2018–19 uniform syllabus).
+          Collected for study; every paper links back to its source.
+        </p>
+        <p style={{ marginTop: 8 }}>
+          <a href={SITE}>{SITE.replace(/^https:\/\//, '')}</a>
+          {' · '}
+          <a href={REPO} target="_blank" rel="noopener">Source and pipeline on GitHub</a>
+        </p>
       </footer>
     </>
   )
@@ -472,6 +480,32 @@ function OpenData() {
           download — and the query box below runs DuckDB inside your own browser.
         </p>
       </section>
+
+      <div className="callout" style={{ marginBottom: 10 }}>
+        <h3>Where this lives</h3>
+        <ul className="linklist">
+          <li>
+            <span>This site</span>
+            <a href={SITE}>{SITE.replace(/^https:\/\//, '')}</a>
+          </li>
+          <li>
+            <span>Code, pipeline and issues</span>
+            <a href={REPO} target="_blank" rel="noopener">
+              {REPO.replace(/^https:\/\//, '')}
+            </a>
+          </li>
+          <li>
+            <span>Dataset and source PDFs</span>
+            <a href={`${BUCKET}/data/questions.parquet`} target="_blank" rel="noopener">
+              public object storage
+            </a>
+          </li>
+        </ul>
+        <p style={{ marginTop: 12 }}>
+          Everything is rebuildable from the repo: the crawl manifest is committed, so
+          <code> task fetch </code> reconstructs all {'~'}900 PDFs from scratch.
+        </p>
+      </div>
 
       <div className="callout" style={{ marginBottom: 10 }}>
         <h3>Use it from anywhere</h3>
