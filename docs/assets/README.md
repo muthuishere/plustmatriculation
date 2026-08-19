@@ -1,62 +1,81 @@
-# TN +2 (HSC 2nd Year) Public Exam Question Papers — Science
+# TN +2 (HSC 2nd Year) Question Papers — Science
 
-Original Directorate of Government Examinations (DGE), Tamil Nadu question papers.
-Every paper is printed **bilingually — "Tamil & English Version"** — so these serve
-English-medium students directly. Files are scans (image PDFs, no text layer);
-source watermark: tamilaruvi.in.
+Tamil Nadu Class 12 papers for **Physics, Chemistry, Maths, Biology, Botany, Zoology**.
+866 PDFs (1644 MB), 866 markdown conversions (116 of them recovered by OCR).
 
-Naming: `12th-<subject>-<year>-<exam-month>.pdf`
+Regenerate everything with `python3 scripts/aggregate.py all`.
 
-| Subject | 2020 Apr | 2020 Sep | 2021 May | 2022 May | 2023 Apr | 2024 Mar | 2025 Mar | 2026 Mar |
-|---|---|---|---|---|---|---|---|---|
-| Physics   | —  | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Chemistry | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Maths     | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Botany    | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Zoology   | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Biology   | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+## Layout
 
-47 papers, ~52 MB.
+```
+docs/assets/
+├── annual/            public (board) exam — ONE bilingual paper statewide per subject
+├── quarterly/         September term exam — set per DISTRICT, so many per subject-year
+│   └── answer-keys/
+├── half-yearly/       December term exam — also district-set
+│   └── answer-keys/
+├── markdown/          raw MarkItDown output, mirroring the tree above
+├── markdown-english/  same text, watermarks + Tamil column stripped
+└── .aggregate/        crawl state: links.tsv, manifest.json (url -> file, sha256)
+```
 
-Notes:
-- **Biology** is the combined paper (Bio-group / vocational stream). The academic
-  Bio-Maths & Pure-Science streams write **Botany** and **Zoology** as separate papers —
-  all three are included.
-- **Physics April 2020 is absent**: that paper was among the March-2020 sittings
-  disrupted by the COVID lockdown; the September 2020 supplementary is the 2020 Physics paper.
-- 2021 papers are the "Type A" variants (the only set published that year).
+Filenames: `12th-<subject>-<year>-<month>.pdf` (annual) and
+`12th-<subject>-<exam>-<year>-<district>.pdf` (term exams).
 
-Source: [tamilaruvi.in — 12th Public Exam Original Question Papers](https://www.tamilaruvi.in/p/12th-public-exam-original-question.html),
-which mirrors the DGE originals. Official portal: [dge.tn.gov.in](https://dge.tn.gov.in).
+## Coverage
 
-## Markdown conversions
+### Annual (public exam)
 
-Both directories mirror the PDF filenames one-for-one (47 files each). **The PDFs are untouched
-and remain the source of truth.**
+| Subject | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026 | na | total |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Physics | — | 1 | 1 | 1 | 1 | 1 | 1 | 1 | — | 7 |
+| Chemistry | — | 2 | 1 | 1 | 1 | 1 | 1 | 1 | — | 8 |
+| Maths | — | 2 | 1 | 1 | 1 | 1 | 1 | 1 | — | 8 |
+| Biology | — | 2 | 1 | 1 | 1 | 1 | 1 | 1 | — | 8 |
+| Botany | — | 2 | 1 | 1 | 1 | 1 | 1 | 1 | — | 8 |
+| Zoology | — | 2 | 1 | 1 | 1 | 1 | 1 | 1 | — | 8 |
 
-| Directory | What it is | Size |
-|---|---|---|
-| `markdown/` | Raw [Microsoft MarkItDown](https://github.com/microsoft/markitdown) output — full fidelity, nothing removed | 8.9 MB |
-| `markdown-english/` | Same text, de-spammed: watermark runs stripped, Tamil column dropped, English questions only | 364 KB |
+### Quarterly
 
-### Why two sets
+| Subject | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026 | na | total |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Physics | — | — | — | 13 +2ak | 7 +4ak | 21 +9ak | 27 +10ak | 0 +1ak | 1 | 95 |
+| Chemistry | 2 +3ak | — | — | 5 | 9 +3ak | 14 +4ak | 29 +17ak | 0 +1ak | — | 87 |
+| Maths | 2 +2ak | — | — | 10 +1ak | 12 +3ak | 25 +9ak | 44 +21ak | 0 +2ak | 1 | 132 |
+| Biology | 1 +1ak | — | — | 4 | 7 +2ak | 13 +3ak | 29 +7ak | 0 +1ak | — | 68 |
+| Botany | — | — | — | 1 | 0 +2ak | 1 +1ak | 10 +2ak | 0 +1ak | — | 18 |
+| Zoology | — | — | — | 2 +1ak | 3 +4ak | 4 +4ak | 9 +3ak | 0 +1ak | — | 31 |
 
-These PDFs are **not** pure scans — they carry a real text layer, so no OCR was needed. But two
-things make the raw output rough:
+### Half-yearly
 
-1. **The Tamil is mojibake.** DGE typesets Tamil in a legacy 8-bit font (Bamini-family), so it
-   extracts as Latin garbage (`C¯Ø¤¯À` = `இயற்பியல்`). Unfixable by re-extraction — it needs a
-   glyph-level transcoding pass. The **English extracts cleanly**, including maths symbols
-   (α, β, Σ, √, superscripts).
-2. **The watermark dominates.** `www.tamilaruvi.in` / `https://t.me/tamilaruviweb` repeats
-   hundreds of times per page — that alone is ~97% of the raw byte count.
+| Subject | 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026 | na | total |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Physics | 1 +2ak | 1 | — | 9 | 15 +2ak | 15 +10ak | 13 +9ak | — | — | 77 |
+| Chemistry | 0 +5ak | — | — | 11 +4ak | 12 +1ak | 26 +6ak | 32 +18ak | — | — | 115 |
+| Maths | 1 +3ak | 1 | — | 15 +4ak | 13 +2ak | 23 +10ak | 28 +7ak | — | — | 107 |
+| Biology | 1 | 1 | — | 6 | 4 +1ak | 11 +2ak | 14 +5ak | — | — | 45 |
+| Botany | — | — | — | 1 | 1 | — | 2 +8ak | — | — | 12 |
+| Zoology | 1 | — | — | 5 +5ak | 3 +1ak | 2 +3ak | 5 +7ak | — | — | 32 |
 
-`markdown-english/` fixes both, which is why it is 25× smaller. Use it for search, RAG, or
-question-bank extraction; use `markdown/` if you ever want to recover the Tamil layer.
+`+Nak` = N answer keys alongside the question papers.
 
-### Known artifact
+## Things that will otherwise surprise you
 
-Reading order follows the PDF's two-column layout, so an MCQ's options sometimes appear **before**
-its question stem, and Tamil-side option labels `(A)(B)(C)(D)` survive alongside the English
-`(a)(b)(c)(d)` when the options are formulae. Fine for search; needs a reflow pass before
-rendering as a clean question bank.
+- **Annual papers are bilingual, term papers are not.** The board prints one paper carrying
+  both languages ("தமிழ் மற்றும் ஆங்கில வழி / Tamil & English Version"), so the annual set
+  serves English medium directly. District quarterly/half-yearly papers are printed per
+  medium — only the English-medium ones are collected here.
+- **There is no single quarterly or half-yearly paper for a year.** Each district frames its
+  own, which is why one subject-year holds 20+ files. The district is in the filename.
+- **2021 is empty and that is correct** — no term exams were held that COVID year, and 2020
+  is sparse for the same reason. Physics April 2020 does not exist either; that sitting was
+  cancelled mid-lockdown, so the September 2020 supplementary is the 2020 Physics paper.
+- **The Tamil in `markdown/` is mojibake.** The board typesets Tamil in a legacy 8-bit font,
+  so it extracts as Latin garbage (`C¯Ø¤¯À` = `இயற்பியல்`). The English extracts cleanly,
+  maths symbols included. `markdown-english/` drops the Tamil rather than pretending to fix it.
+- **Reading order follows the PDF's two columns**, so an MCQ's options can appear before its
+  question stem. Fine for search; needs a reflow pass to become a clean question bank.
+
+Sources: [tamilaruvi.in](https://www.tamilaruvi.in/p/12th-public-exam-original-question.html)
+(annual), [padasalai.net](https://www.padasalai.net) (term exams) — both mirror the DGE
+originals. Official portal: [dge.tn.gov.in](https://dge.tn.gov.in).
